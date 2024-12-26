@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>経験値計算機</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input { margin: 5px 0; padding: 5px; width: 100%; }
+        button { padding: 10px; margin-top: 10px; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>経験値計算機</h1>
+    <label>正解数を入力:</label>
+    <input type="number" id="n" />
+    
+    <label>不正解数を入力:</label>
+    <input type="number" id="s" />
+    
+    <label>セット連続数を入力:</label>
+    <input type="number" id="t" />
+    
+    <button onclick="calculate()">計算する</button>
+    
+    <div class="result" id="result"></div>
+    
+    <script>
+        function calculate() {
+            const base = 10000;
+            const n = parseInt(document.getElementById('n').value) || 0;
+            const s = parseInt(document.getElementById('s').value) || 0;
+            const t = parseInt(document.getElementById('t').value) || 0;
+            const l = n + s;
+
+            const correct = 1 + 0.005 * n;
+            const falseVal = 1 + 0.02 * s;
+            const questions = 1 + 0.005 * l;
+
+            const consecutibeofnumbers = 1.1 + 0.9 / (1 + Math.exp(-0.35 * (t - 10)));
+            const result = base * correct * falseVal * questions * consecutibeofnumbers;
+
+            document.getElementById('result').innerText = `計算結果: ${result.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
